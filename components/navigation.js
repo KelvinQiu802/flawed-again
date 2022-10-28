@@ -5,14 +5,14 @@ import style from './navigation.module.css';
 import Link from 'next/link';
 
 const logOutNav = [
-  { text: 'Project Manager', id: 'ProjectManager' },
+  { text: 'Project Manager', id: 'N-ProjectManager' },
   { text: 'Home', id: 'N-Home' },
   { text: 'Sign up', id: 'N-Signup' },
   { text: 'Log in', id: 'N-Login' },
   //  { text: "Admin", id: "Admin" },
 ];
 const logInNav = [
-  { text: 'Project Manager', id: 'ProjectManager' },
+  { text: 'Project Manager', id: 'N-ProjectManager' },
   { text: 'Home', id: 'N-Home' },
   { text: 'Projects', id: 'N-Project' },
   // { text: "Messages", id: "N-Messages" },
