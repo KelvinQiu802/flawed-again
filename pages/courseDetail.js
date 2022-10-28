@@ -22,7 +22,7 @@ import urlMonitor from '../utils/urlMonitor';
 
 const learnTitle = ['Contribution', 'Visible Range', 'Operation'];
 const teachTitle = ['Contributer', 'Contribution', 'Operation'];
-const coursewareTilte = ['Project Document', 'Operation'];
+const coursewareTilte = ['Project Files', 'Operation'];
 
 const modalStyle = {
   position: 'absolute',
@@ -128,7 +128,7 @@ export default function CourseDetail() {
                 setUploadModal(false);
               }}
             >
-              Project Document
+              Project Files
             </Button>
             <Button
               id='Up-CF'
@@ -273,42 +273,6 @@ export default function CourseDetail() {
                 </Button>
               </Stack>
             ))}
-          </Stack>
-          <Stack
-            direction='row'
-            sx={{
-              position: 'absolute',
-              top: 'calc(150vh)',
-              paddingBottom: '50px',
-            }}
-          >
-            <TextField
-              id='Up-input'
-              sx={{ width: '600px !important' }}
-              value={contentToAdd}
-              onChange={(event) => {
-                setContentToAdd(event.target.value);
-              }}
-              onClick={() => {
-                setUploadModal(true);
-              }}
-            ></TextField>
-            <Button
-              id='Up-Add'
-              onClick={async () => {
-                const _ = await uploadAssignment({
-                  assignmentName: contentToAdd,
-                  ownerName: localStorage.getItem('username'),
-                  courseName,
-                });
-                if (_.res) {
-                  setContentToAdd('');
-                  _getMyAssignments();
-                }
-              }}
-            >
-              Add
-            </Button>
           </Stack>
         </div>
       );
@@ -462,42 +426,6 @@ export default function CourseDetail() {
               </Stack>
             ))}
           </Stack>
-
-          <Stack
-            direction='row'
-            sx={{
-              position: 'absolute',
-              top: 'calc(150vh)',
-              paddingBottom: '50px',
-            }}
-          >
-            <TextField
-              id='Up-input'
-              sx={{ width: '600px !important' }}
-              value={contentToAdd}
-              onChange={(event) => {
-                setContentToAdd(event.target.value);
-              }}
-              onClick={() => {
-                setUploadModal(true);
-              }}
-            ></TextField>
-            <Button
-              id='Up-Add'
-              onClick={async () => {
-                const _ = await uploadCourseware({
-                  courseName,
-                  coursewareName: contentToAdd,
-                });
-                if (_.res) {
-                  setContentToAdd('');
-                  getCoursewares();
-                }
-              }}
-            >
-              Add
-            </Button>
-          </Stack>
         </div>
       );
     }
@@ -516,6 +444,35 @@ export default function CourseDetail() {
         <div className={'index-title title-green'}>
           {'Project: ' + courseName}
         </div>
+        <Stack direction='row' sx={{ mt: 5 }}>
+          <TextField
+            id='Up-input'
+            sx={{ width: '600px !important' }}
+            value={contentToAdd}
+            onChange={(event) => {
+              setContentToAdd(event.target.value);
+            }}
+            onClick={() => {
+              setUploadModal(true);
+            }}
+          ></TextField>
+          <Button
+            id='Up-Add'
+            onClick={async () => {
+              const _ = await uploadAssignment({
+                assignmentName: contentToAdd,
+                ownerName: localStorage.getItem('username'),
+                courseName,
+              });
+              if (_.res) {
+                setContentToAdd('');
+                _getMyAssignments();
+              }
+            }}
+          >
+            Add
+          </Button>
+        </Stack>
         {getMain(category)}
       </Box>
     </MainLayout>
