@@ -124,24 +124,24 @@ export default function CourseDetail() {
               sx={fakeBtn}
               onClick={() => {
                 let tick = new Date().getTime().toString();
-                setContentToAdd(`DOC ${tick.substring(tick.length - 8)}`);
+                setContentToAdd(
+                  `Contribution ${tick.substring(tick.length - 8)}`
+                );
                 setUploadModal(false);
               }}
             >
-              Project Files
+              Contribute Code
             </Button>
             <Button
               id='Up-CF'
               sx={fakeBtn}
               onClick={() => {
                 let tick = new Date().getTime().toString();
-                setContentToAdd(
-                  `Contribute ${tick.substring(tick.length - 8)}`
-                );
+                setContentToAdd(`DOC ${tick.substring(tick.length - 8)}`);
                 setUploadModal(false);
               }}
             >
-              Contribute Code
+              Project Document
             </Button>
           </Stack>
         </Box>
@@ -153,6 +153,35 @@ export default function CourseDetail() {
     if (c === 'learn') {
       return (
         <div className={style.block}>
+          <Stack direction='row' sx={{ mt: 5 }}>
+            <TextField
+              id='Up-input'
+              sx={{ width: '600px !important' }}
+              value={contentToAdd}
+              onChange={(event) => {
+                setContentToAdd(event.target.value);
+              }}
+              onClick={() => {
+                setUploadModal(true);
+              }}
+            ></TextField>
+            <Button
+              id='Up-Add'
+              onClick={async () => {
+                const _ = await uploadAssignment({
+                  assignmentName: contentToAdd,
+                  ownerName: localStorage.getItem('username'),
+                  courseName,
+                });
+                if (_.res) {
+                  setContentToAdd('');
+                  _getMyAssignments();
+                }
+              }}
+            >
+              Add
+            </Button>
+          </Stack>
           {uploadModalHook()}
           <Stack sx={{ marginTop: '60px' }}>
             <Stack direction='row'>
@@ -279,6 +308,34 @@ export default function CourseDetail() {
     } else if (c === 'teach') {
       return (
         <div className={style.block}>
+          <Stack direction='row' sx={{ mt: 5 }}>
+            <TextField
+              id='Up-input'
+              sx={{ width: '600px !important' }}
+              value={contentToAdd}
+              onChange={(event) => {
+                setContentToAdd(event.target.value);
+              }}
+              onClick={() => {
+                setUploadModal(true);
+              }}
+            ></TextField>
+            <Button
+              id='Up-Add'
+              onClick={async () => {
+                const _ = await uploadCourseware({
+                  courseName,
+                  coursewareName: contentToAdd,
+                });
+                if (_.res) {
+                  setContentToAdd('');
+                  getCoursewares();
+                }
+              }}
+            >
+              Add
+            </Button>
+          </Stack>
           {uploadModalHook()}
           <Modal
             open={showModal}
@@ -361,7 +418,6 @@ export default function CourseDetail() {
               </Stack>
             ))}
           </Stack>
-
           <div className='line'></div>
           <Stack sx={{ marginTop: '60px' }}>
             <Stack direction='row'>
@@ -441,38 +497,7 @@ export default function CourseDetail() {
           overflowX: 'hidden',
         }}
       >
-        <div className={'index-title title-green'}>
-          {'Project: ' + courseName}
-        </div>
-        <Stack direction='row' sx={{ mt: 5 }}>
-          <TextField
-            id='Up-input'
-            sx={{ width: '600px !important' }}
-            value={contentToAdd}
-            onChange={(event) => {
-              setContentToAdd(event.target.value);
-            }}
-            onClick={() => {
-              setUploadModal(true);
-            }}
-          ></TextField>
-          <Button
-            id='Up-Add'
-            onClick={async () => {
-              const _ = await uploadAssignment({
-                assignmentName: contentToAdd,
-                ownerName: localStorage.getItem('username'),
-                courseName,
-              });
-              if (_.res) {
-                setContentToAdd('');
-                _getMyAssignments();
-              }
-            }}
-          >
-            Add
-          </Button>
-        </Stack>
+        <div className={style.maintitle}>{'Project: ' + courseName}</div>
         {getMain(category)}
       </Box>
     </MainLayout>
