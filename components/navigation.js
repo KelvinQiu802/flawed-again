@@ -5,16 +5,16 @@ import style from './navigation.module.css';
 import Link from 'next/link';
 
 const logOutNav = [
-  { text: 'Project Manager', id: 'N-ASSTclassroom' },
+  { text: 'Project Manager', id: 'ProjectManager' },
   { text: 'Home', id: 'N-Home' },
   { text: 'Sign up', id: 'N-Signup' },
   { text: 'Log in', id: 'N-Login' },
   //  { text: "Admin", id: "Admin" },
 ];
 const logInNav = [
-  { text: 'Project Manager', id: 'N-ASSTclassroom' },
+  { text: 'Project Manager', id: 'ProjectManager' },
   { text: 'Home', id: 'N-Home' },
-  { text: 'Courses', id: 'N-Course' },
+  { text: 'Projects', id: 'N-Project' },
   // { text: "Messages", id: "N-Messages" },
   { text: 'Log out', id: 'N-Logout' },
   //  { text: "Admin", id: "Admin" },
@@ -24,7 +24,7 @@ const routerMap = {
   Home: '/',
   'Sign up': '/signup',
   'Log in': '/login',
-  Courses: 'courses',
+  Projects: 'courses',
   Messages: 'messages',
   'Log out': '/',
   Admin: '/admin',

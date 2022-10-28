@@ -1,45 +1,45 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import MainLayout from "../components/mainLayout";
-import style from "../styles/courses.module.css";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Button, Stack, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import MainLayout from '../components/mainLayout';
+import style from '../styles/courses.module.css';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   postBlueClick,
   postCreateCourse,
   getCoursesByUsername,
   postSearchCourse,
   postJoinCourse,
-} from "../util";
-import Modal from "@mui/material/Modal";
-import { useRouter } from "next/router";
-import Flow from "./flow";
-import urlMonitor from "../utils/urlMonitor";
-import React from "react";
+} from '../util';
+import Modal from '@mui/material/Modal';
+import { useRouter } from 'next/router';
+import Flow from './flow';
+import urlMonitor from '../utils/urlMonitor';
+import React from 'react';
 
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "30vh",
-  bgcolor: "white !important",
-  border: "2px solid #000",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40vw',
+  height: '30vh',
+  bgcolor: 'white !important',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
 };
 
 export default function Courses() {
   const router = useRouter();
 
-  const [createCourseName, setCreateCourseName] = useState("");
+  const [createCourseName, setCreateCourseName] = useState('');
   const [courses, setCourses] = useState([]);
-  const [searchInfo, setSearchInfo] = useState("");
+  const [searchInfo, setSearchInfo] = useState('');
   const [showModal, setModal] = useState(false);
   const [courseToJoin, setCourseToJoin] = useState(null);
 
@@ -67,7 +67,7 @@ export default function Courses() {
   async function clickSearch() {
     const res = await postSearchCourse({
       courseName: searchInfo,
-      username: localStorage.getItem("username"),
+      username: localStorage.getItem('username'),
     });
     if (res.course) {
       if (res.jump) {
@@ -75,7 +75,7 @@ export default function Courses() {
           return item.courseName === searchInfo;
         });
         router.push({
-          pathname: "/courseDetail",
+          pathname: '/courseDetail',
           query: { category: course.category, courseName: course.courseName },
         });
       } else {
@@ -94,53 +94,53 @@ export default function Courses() {
       <Modal
         open={showModal}
         onClose={() => {}}
-        aria-labelledby="modal-modal-title"
+        aria-labelledby='modal-modal-title'
       >
         <Box sx={modalStyle}>
-          <Stack direction="row" spacing={10}>
-            <Stack alignItems="center">
+          <Stack direction='row' spacing={10}>
+            <Stack alignItems='center'>
               <Typography
-                id="modal-modal-title"
-                variant="h5"
-                component="h2"
-                sx={{ marginBottom: "30px" }}
+                id='modal-modal-title'
+                variant='h5'
+                component='h2'
+                sx={{ marginBottom: '30px' }}
               >
-                Courses
+                Project
               </Typography>
               <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-                sx={{ color: "rgba(16, 16, 16, 0.41) !important" }}
+                id='modal-modal-title'
+                variant='h6'
+                component='h2'
+                sx={{ color: 'rgba(16, 16, 16, 0.41) !important' }}
               >
                 {courseToJoin && courseToJoin.courseName}
               </Typography>
             </Stack>
 
-            <Stack alignItems="center">
+            <Stack alignItems='center'>
               <Typography
-                id="modal-modal-title"
-                variant="h5"
-                component="h2"
-                sx={{ marginBottom: "30px" }}
+                id='modal-modal-title'
+                variant='h5'
+                component='h2'
+                sx={{ marginBottom: '30px' }}
               >
-                Teacher
+                Owner
               </Typography>
               <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-                sx={{ color: "rgba(16, 16, 16, 0.41) !important" }}
+                id='modal-modal-title'
+                variant='h6'
+                component='h2'
+                sx={{ color: 'rgba(16, 16, 16, 0.41) !important' }}
               >
                 {courseToJoin && courseToJoin.teacherName}
               </Typography>
             </Stack>
 
             <Button
-              id="J-Join"
+              id='J-Join'
               sx={{
-                color: "rgba(16, 16, 16, 0.41) !important",
-                fontSize: "20px",
+                color: '#96C99F !important',
+                fontSize: '20px',
               }}
               onClick={async () => {
                 const _ = await postJoinCourse({
@@ -159,24 +159,127 @@ export default function Courses() {
       </Modal>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          alignItems: "center",
+          width: '50%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          margin: '0 auto',
+          marginBottom: '30px',
         }}
       >
-        <Stack direction="row" spacing={4} sx={{ margin: "20px" }}>
+        <Typography
+          variant='h2'
+          sx={{ fontSize: '26px !important', fontWeight: '700' }}
+        >
+          <span className='title-green'>Create a New Project</span>
+        </Typography>
+        <TextField
+          id='C-projectname'
+          label='Project Name'
+          sx={{ marginTop: '30px', width: '60%', marginBottom: '50px' }}
+          onChange={(event) => {
+            setCreateCourseName(event.target.value);
+          }}
+        ></TextField>
+        <Button
+          id='C-Submit'
+          className={style.button}
+          variant='outlined'
+          sx={{ width: '40%', padding: '30px' }}
+          onClick={() => {
+            addNewCourse();
+          }}
+        >
+          Submit!
+        </Button>
+      </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <h1 className='index-title title-green'>All Projects</h1>
+        <Box
+          sx={{
+            width: '1200px',
+            marginTop: '80px',
+          }}
+        >
+          <Stack>
+            <div className={style.row}>
+              <div
+                className={
+                  style.rowFirst + ' ' + style.rowHead + ' ' + 'title-green'
+                }
+              >
+                Projects
+              </div>
+              <div
+                className={
+                  style.rowSecond + ' ' + style.rowHead + ' ' + 'title-green'
+                }
+              >
+                Option
+              </div>
+            </div>
+            {courses.map((item) => (
+              <div key={item.courseName} className={style.row}>
+                <Link
+                  passHref
+                  href={{
+                    pathname: '/courseDetail',
+                    query: {
+                      category: item.category,
+                      courseName: item.courseName,
+                    },
+                  }}
+                >
+                  <div
+                    id='CC-coursename'
+                    className={style.rowFirst + ' ' + style.rowContent}
+                  >
+                    {item.courseName}
+                  </div>
+                </Link>
+                <a
+                  className={`${style.rowSecond} ${style.rowContent}`}
+                  style={{ color: '#3291f8 !important' }}
+                >
+                  <div
+                    className={style.link}
+                    id='pCourses-Status'
+                    onClick={() => {
+                      postBlueClick('pCourses-Status');
+                    }}
+                  >
+                    {item.category == 'teach' ? 'Manage' : 'Contribute'}
+                  </div>
+                </a>
+              </div>
+            ))}
+          </Stack>
+        </Box>
+
+        <Stack
+          direction='row'
+          spacing={4}
+          sx={{ margin: '20px', marginTop: '0px' }}
+        >
           <TextField
-            id="SRCH-input"
-            sx={{ width: "80vw" }}
+            id='SRCH-input'
+            sx={{ width: '80vw' }}
             onChange={(event) => {
               setSearchInfo(event.target.value);
             }}
           ></TextField>
           <Button
-            id="SRCH-Yes"
+            id='SRCH-Yes'
             className={style.button}
-            variant="outlined"
+            variant='outlined'
             onClick={() => {
               clickSearch();
             }}
@@ -184,96 +287,6 @@ export default function Courses() {
             Yes
           </Button>
         </Stack>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            width: "100%",
-            marginTop: "80px",
-          }}
-        >
-          <Box sx={{ width: "50%" }}>
-            <Stack>
-              <div className={style.row}>
-                <div className={style.rowFirst + " " + style.rowHead}>
-                  Courses
-                </div>
-                <div className={style.rowSecond + " " + style.rowHead}>
-                  Status
-                </div>
-              </div>
-              {courses.map((item) => (
-                <div key={item.courseName} className={style.row}>
-                  <Link
-                    passHref
-                    href={{
-                      pathname: "/courseDetail",
-                      query: {
-                        category: item.category,
-                        courseName: item.courseName,
-                      },
-                    }}
-                  >
-                    <div
-                      id="CC-coursename"
-                      className={style.rowFirst + " " + style.rowContent}
-                    >
-                      {item.courseName}
-                    </div>
-                  </Link>
-                  <a
-                    className={`${style.rowSecond} ${style.rowContent}`}
-                    style={{ color: "#3291f8 !important" }}
-                  >
-                    <div
-                      className={style.link}
-                      id="pCourses-Status"
-                      onClick={() => {
-                        postBlueClick("pCourses-Status");
-                      }}
-                    >
-                      {item.category}
-                    </div>
-                  </a>
-                </div>
-              ))}
-            </Stack>
-          </Box>
-          <Box
-            sx={{
-              width: "50%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="h2"
-              sx={{ fontSize: "26px !important", fontWeight: "700" }}
-            >
-              Create Course
-            </Typography>
-            <TextField
-              id="C-coursename"
-              label="Course Name"
-              sx={{ marginTop: "30px", width: "60%", marginBottom: "50px" }}
-              onChange={(event) => {
-                setCreateCourseName(event.target.value);
-              }}
-            ></TextField>
-            <Button
-              id="C-Confirm"
-              className={style.button}
-              variant="outlined"
-              sx={{ width: "40%", padding: "30px" }}
-              onClick={() => {
-                addNewCourse();
-              }}
-            >
-              Confirm
-            </Button>
-          </Box>
-        </Box>
       </Box>
     </MainLayout>
   );
