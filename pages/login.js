@@ -65,7 +65,7 @@ export default function Login() {
             alignItems='center'
           >
             <Typography variant='h5' component='div' sx={{ color: '#96C99F' }}>
-              Username
+              Username:
             </Typography>
             <TextField
               required
@@ -85,7 +85,7 @@ export default function Login() {
             alignItems='center'
           >
             <Typography variant='h5' component='div' sx={{ color: '#96C99F' }}>
-              Password
+              Password:
             </Typography>
             <FormControl sx={{ m: 1, width: '30ch' }} variant='outlined'>
               <InputLabel htmlFor='outlined-adornment-password'>
