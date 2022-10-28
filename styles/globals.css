@@ -69,3 +69,11 @@ footer {
   color: #747474;
   font-size: 1.1em;
 }
+
+.line {
+  height: 2px;
+  width: 80vw;
+  margin: 0 auto;
+  background-color: #ccc;
+  margin-top: 50px;
+}

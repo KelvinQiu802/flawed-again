@@ -232,7 +232,7 @@ export default function CourseDetail() {
               </Stack>
             ))}
           </Stack>
-
+          <div className='line'></div>
           <Stack sx={{ marginTop: '60px' }}>
             <Stack direction='row'>
               {coursewareTilte.map((item, index) => (
@@ -274,7 +274,6 @@ export default function CourseDetail() {
               </Stack>
             ))}
           </Stack>
-
           <Stack
             direction='row'
             sx={{
@@ -399,6 +398,7 @@ export default function CourseDetail() {
             ))}
           </Stack>
 
+          <div className='line'></div>
           <Stack sx={{ marginTop: '60px' }}>
             <Stack direction='row'>
               {coursewareTilte.map((item, index) => (
@@ -513,7 +513,9 @@ export default function CourseDetail() {
           overflowX: 'hidden',
         }}
       >
-        <div className={style.maintitle}>{courseName}</div>
+        <div className={'index-title title-green'}>
+          {'Project: ' + courseName}
+        </div>
         {getMain(category)}
       </Box>
     </MainLayout>
