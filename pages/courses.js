@@ -174,7 +174,7 @@ export default function Courses() {
           <span className='title-green'>Create a New Project</span>
         </Typography>
         <TextField
-          id='C-projectname'
+          id='C-Projectname'
           label='Project Name'
           sx={{ marginTop: '30px', width: '60%', marginBottom: '50px' }}
           onChange={(event) => {
@@ -243,7 +243,7 @@ export default function Courses() {
                   }}
                 >
                   <div
-                    id='CC-coursename'
+                    id='CC-Projectname'
                     className={style.rowFirst + ' ' + style.rowContent}
                   >
                     {item.courseName}
