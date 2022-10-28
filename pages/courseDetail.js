@@ -1,12 +1,12 @@
-import MainLayout from "../components/mainLayout";
-import { useRouter } from "next/router";
-import style from "../styles/courseDetail.module.css";
-import utilStyle from "../styles/util.module.css";
-import { Button, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Box } from "@mui/system";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import MainLayout from '../components/mainLayout';
+import { useRouter } from 'next/router';
+import style from '../styles/courseDetail.module.css';
+import utilStyle from '../styles/util.module.css';
+import { Button, Stack, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box } from '@mui/system';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 import {
   postBlueClick,
   getCoursewaresByCoursename,
@@ -17,35 +17,35 @@ import {
   deleteAssignment,
   getCourseAssignments,
   shareMessage,
-} from "../util";
-import urlMonitor from "../utils/urlMonitor";
+} from '../util';
+import urlMonitor from '../utils/urlMonitor';
 
-const learnTitle = ["Assignments", "Visible Range", "Operation"];
-const teachTitle = ["Student", "Assignment", "Operation"];
-const coursewareTilte = ["Courseware", "Operation"];
+const learnTitle = ['Contribution', 'Visible Range', 'Operation'];
+const teachTitle = ['Contributer', 'Contribution', 'Operation'];
+const coursewareTilte = ['Project Document', 'Operation'];
 
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "30vh",
-  bgcolor: "white !important",
-  border: "2px solid #000",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40vw',
+  height: '30vh',
+  bgcolor: 'white !important',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
 };
 
 const modalYes = {
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   left: 10,
-  color: "rgba(16, 16, 16, 0.41) !important",
+  color: 'rgba(16, 16, 16, 0.41) !important',
 };
 
 export default function CourseDetail() {
@@ -55,8 +55,8 @@ export default function CourseDetail() {
   const [coursewares, setCoursewares] = useState([]);
   const [courseAssignments, setCourseAssignments] = useState([]);
   const [showModal, setModal] = useState(false);
-  const [contentToAdd, setContentToAdd] = useState("");
-  const [messageToShare, setMessageToShare] = useState("");
+  const [contentToAdd, setContentToAdd] = useState('');
+  const [messageToShare, setMessageToShare] = useState('');
   const [uploadModal, setUploadModal] = useState(false);
   const [downloadModal, setDownloadModal] = useState(false);
 
@@ -73,7 +73,7 @@ export default function CourseDetail() {
   const _getMyAssignments = async () => {
     let _ = await getMyAssignments({
       courseName,
-      userName: localStorage.getItem("username"),
+      userName: localStorage.getItem('username'),
     });
     setLearnAssignments(_.assignments);
   };
@@ -81,69 +81,67 @@ export default function CourseDetail() {
   useEffect(() => {
     urlMonitor();
     let params = new URL(document.location).searchParams;
-    courseName = params.get("courseName");
-    category = params.get("category");
+    courseName = params.get('courseName');
+    category = params.get('category');
 
     getCoursewares();
-    if (category === "learn") {
+    if (category === 'learn') {
       _getMyAssignments();
-    } else if (category === "teach") {
+    } else if (category === 'teach') {
       getAssignmentsByCoursename();
     }
   }, []);
 
   if (showModal) {
     setModal(false);
-    router.push("/deleted");
+    router.push('/deleted');
   }
 
   if (downloadModal) {
     setDownloadModal(false);
-    router.push("/download");
+    router.push('/download');
   }
 
   const uploadModalHook = () => {
     const fakeBtn = {
-      borderStyle: "solid",
-      borderColor: "rgba(16, 16, 16, 0.41)",
-      borderWidth: "1px",
-      margin: "30px",
-      padding: "20px",
-      color: "black",
+      borderStyle: 'solid',
+      borderColor: 'rgba(16, 16, 16, 0.41)',
+      borderWidth: '1px',
+      margin: '30px',
+      padding: '20px',
+      color: 'black',
     };
 
     return (
       <Modal open={uploadModal}>
         <Box sx={modalStyle}>
-          <Typography id="modal-modal-title" variant="h5" component="h2">
+          <Typography id='modal-modal-title' variant='h5' component='h2'>
             Select a file to submit
           </Typography>
-          <Stack direction="row" justifyContent="center" sx={{ width: "100%" }}>
+          <Stack direction='row' justifyContent='center' sx={{ width: '100%' }}>
             <Button
-              id="Up-AF"
+              id='Up-AF'
               sx={fakeBtn}
               onClick={() => {
                 let tick = new Date().getTime().toString();
-                setContentToAdd(
-                  `assignment file ${tick.substring(tick.length - 8)}`
-                );
+                setContentToAdd(`DOC ${tick.substring(tick.length - 8)}`);
                 setUploadModal(false);
               }}
             >
-              assignment file
+              Project Document
             </Button>
             <Button
-              id="Up-CF"
+              id='Up-CF'
               sx={fakeBtn}
               onClick={() => {
                 let tick = new Date().getTime().toString();
                 setContentToAdd(
-                  `courseware file ${tick.substring(tick.length - 8)}`
+                  `Contribute ${tick.substring(tick.length - 8)}`
                 );
                 setUploadModal(false);
               }}
             >
-              courseware file
+              Contribute Code
             </Button>
           </Stack>
         </Box>
@@ -152,51 +150,51 @@ export default function CourseDetail() {
   };
 
   function getMain(c) {
-    if (c === "learn") {
+    if (c === 'learn') {
       return (
         <div className={style.block}>
           {uploadModalHook()}
-          <Stack sx={{ marginTop: "60px" }}>
-            <Stack direction="row">
+          <Stack sx={{ marginTop: '60px' }}>
+            <Stack direction='row'>
               {learnTitle.map((item, index) => (
                 <div
                   key={index}
-                  className={style.secondTitle + " " + style.threeRowBlock}
+                  className={style.secondTitle + ' ' + style.threeRowBlock}
                 >
                   {item}
                 </div>
               ))}
             </Stack>
             {learnAssignments.map((item, index) => (
-              <Stack direction="row" key={index}>
+              <Stack direction='row' key={index}>
                 <div
-                  id="pLearn-Assignment"
+                  id='pLearn-Assignment'
                   className={
-                    style.threeRowBlock + " " + utilStyle.blueHighlight
+                    style.threeRowBlock + ' ' + utilStyle.blueHighlight
                   }
                   onClick={() => {
-                    postBlueClick("pLearn-Assignment");
+                    postBlueClick('pLearn-Assignment');
                   }}
                 >
                   {item.assignmentName}
                 </div>
                 <div
-                  id="pLearn-VisibleRange"
+                  id='pLearn-VisibleRange'
                   className={
-                    style.threeRowBlock + " " + utilStyle.blueHighlight
+                    style.threeRowBlock + ' ' + utilStyle.blueHighlight
                   }
                   onClick={() => {
-                    postBlueClick("pLearn-VisibleRange");
+                    postBlueClick('pLearn-VisibleRange');
                   }}
                 >
                   {item.visibleRange}
                 </div>
                 <div className={style.threeRowBlock}>
                   <Button
-                    id="D-Delete"
+                    id='D-Delete'
                     sx={{
-                      color: "black !important",
-                      fontSize: "22px !important",
+                      color: 'black !important',
+                      fontSize: '22px !important',
                     }}
                     onClick={() => {
                       setTimeout(async () => {
@@ -213,16 +211,16 @@ export default function CourseDetail() {
                     Delete
                   </Button>
                   <Button
-                    id="DL-Download"
+                    id='DL-Download'
                     sx={{
-                      color: "black !important",
-                      fontSize: "22px !important",
+                      color: 'black !important',
+                      fontSize: '22px !important',
                     }}
                     download={true}
                     href={`/files/${
-                      item.assignmentName.includes("assignment")
-                        ? "assignment"
-                        : "courseware"
+                      item.assignmentName.includes('assignment')
+                        ? 'assignment'
+                        : 'courseware'
                     }.txt`}
                     onClick={() => {
                       setDownloadModal(true);
@@ -235,38 +233,38 @@ export default function CourseDetail() {
             ))}
           </Stack>
 
-          <Stack sx={{ marginTop: "60px" }}>
-            <Stack direction="row">
+          <Stack sx={{ marginTop: '60px' }}>
+            <Stack direction='row'>
               {coursewareTilte.map((item, index) => (
                 <div
                   key={index}
-                  className={style.secondTitle + " " + style.twoRowBlock}
+                  className={style.secondTitle + ' ' + style.twoRowBlock}
                 >
                   {item}
                 </div>
               ))}
             </Stack>
             {coursewares.map((item, index) => (
-              <Stack direction="row" key={index}>
+              <Stack direction='row' key={index}>
                 <div
-                  id="pLearn-Courseware"
-                  className={style.twoRowBlock + " " + utilStyle.blueHighlight}
+                  id='pLearn-Courseware'
+                  className={style.twoRowBlock + ' ' + utilStyle.blueHighlight}
                   onClick={() => {
-                    postBlueClick("pLearn-Courseware");
+                    postBlueClick('pLearn-Courseware');
                   }}
                 >
                   {item.coursewareName}
                 </div>
                 <Button
-                  id="DL-Download"
+                  id='DL-Download'
                   download={true}
                   href={`/files/${
-                    item.coursewareName.includes("assignment")
-                      ? "assignment"
-                      : "courseware"
+                    item.coursewareName.includes('assignment')
+                      ? 'assignment'
+                      : 'courseware'
                   }.txt`}
                   className={style.twoRowBlock}
-                  sx={{ color: "black !important" }}
+                  sx={{ color: 'black !important' }}
                   onClick={() => {
                     setDownloadModal(true);
                   }}
@@ -278,16 +276,16 @@ export default function CourseDetail() {
           </Stack>
 
           <Stack
-            direction="row"
+            direction='row'
             sx={{
-              position: "absolute",
-              top: "calc(150vh)",
-              paddingBottom: "50px",
+              position: 'absolute',
+              top: 'calc(150vh)',
+              paddingBottom: '50px',
             }}
           >
             <TextField
-              id="Up-input"
-              sx={{ width: "600px !important" }}
+              id='Up-input'
+              sx={{ width: '600px !important' }}
               value={contentToAdd}
               onChange={(event) => {
                 setContentToAdd(event.target.value);
@@ -297,15 +295,15 @@ export default function CourseDetail() {
               }}
             ></TextField>
             <Button
-              id="Up-Add"
+              id='Up-Add'
               onClick={async () => {
                 const _ = await uploadAssignment({
                   assignmentName: contentToAdd,
-                  ownerName: localStorage.getItem("username"),
+                  ownerName: localStorage.getItem('username'),
                   courseName,
                 });
                 if (_.res) {
-                  setContentToAdd("");
+                  setContentToAdd('');
                   _getMyAssignments();
                 }
               }}
@@ -315,18 +313,18 @@ export default function CourseDetail() {
           </Stack>
         </div>
       );
-    } else if (c === "teach") {
+    } else if (c === 'teach') {
       return (
         <div className={style.block}>
           {uploadModalHook()}
           <Modal
             open={showModal}
             onClose={() => {}}
-            aria-labelledby="modal-modal-title"
+            aria-labelledby='modal-modal-title'
           >
             <Box sx={modalStyle}>
               <Box
-                id="R-Yes"
+                id='R-Yes'
                 sx={modalYes}
                 onClick={() => {
                   shareMessage(messageToShare);
@@ -335,42 +333,42 @@ export default function CourseDetail() {
               >
                 Yes
               </Box>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography id='modal-modal-title' variant='h6' component='h2'>
                 Do you confirm sending a request to share the work?
               </Typography>
             </Box>
           </Modal>
-          <Stack sx={{ marginTop: "60px" }}>
-            <Stack direction="row">
+          <Stack sx={{ marginTop: '60px' }}>
+            <Stack direction='row'>
               {teachTitle.map((item, index) => (
                 <div
                   key={index}
-                  className={style.secondTitle + " " + style.threeRowBlock}
+                  className={style.secondTitle + ' ' + style.threeRowBlock}
                 >
                   {item}
                 </div>
               ))}
             </Stack>
             {courseAssignments.map((item, index) => (
-              <Stack direction="row" key={index}>
+              <Stack direction='row' key={index}>
                 <div
-                  id="pTeach-Student"
+                  id='pTeach-Student'
                   className={
-                    style.threeRowBlock + " " + utilStyle.blueHighlight
+                    style.threeRowBlock + ' ' + utilStyle.blueHighlight
                   }
                   onClick={() => {
-                    postBlueClick("pTeach-Student");
+                    postBlueClick('pTeach-Student');
                   }}
                 >
                   {item.ownerName}
                 </div>
                 <div
-                  id="pTeach-Assignment"
+                  id='pTeach-Assignment'
                   className={
-                    style.threeRowBlock + " " + utilStyle.blueHighlight
+                    style.threeRowBlock + ' ' + utilStyle.blueHighlight
                   }
                   onClick={() => {
-                    postBlueClick("pTeach-Assignment");
+                    postBlueClick('pTeach-Assignment');
                   }}
                 >
                   {item.assignmentName}
@@ -378,16 +376,16 @@ export default function CourseDetail() {
                 {
                   <div className={style.threeRowBlock}>
                     <Button
-                      id="DL-Download"
+                      id='DL-Download'
                       download={true}
                       href={`/files/${
-                        item.assignmentName.includes("assignment")
-                          ? "assignment"
-                          : "courseware"
+                        item.assignmentName.includes('assignment')
+                          ? 'assignment'
+                          : 'courseware'
                       }.txt`}
                       sx={{
-                        color: "black !important",
-                        fontSize: "22px !important",
+                        color: 'black !important',
+                        fontSize: '22px !important',
                       }}
                       onClick={() => {
                         setDownloadModal(true);
@@ -401,40 +399,40 @@ export default function CourseDetail() {
             ))}
           </Stack>
 
-          <Stack sx={{ marginTop: "60px" }}>
-            <Stack direction="row">
+          <Stack sx={{ marginTop: '60px' }}>
+            <Stack direction='row'>
               {coursewareTilte.map((item, index) => (
                 <div
                   key={index}
-                  className={style.secondTitle + " " + style.twoRowBlock}
+                  className={style.secondTitle + ' ' + style.twoRowBlock}
                 >
                   {item}
                 </div>
               ))}
             </Stack>
             {coursewares.map((item, index) => (
-              <Stack direction="row" key={index}>
+              <Stack direction='row' key={index}>
                 <div
-                  id="pTeach-Courseware"
-                  className={style.twoRowBlock + " " + utilStyle.blueHighlight}
+                  id='pTeach-Courseware'
+                  className={style.twoRowBlock + ' ' + utilStyle.blueHighlight}
                   onClick={() => {
-                    postBlueClick("pTeach-Courseware");
+                    postBlueClick('pTeach-Courseware');
                   }}
                 >
                   {item.coursewareName}
                 </div>
                 <div className={style.twoRowBlock}>
                   <Button
-                    id="DL-Download"
+                    id='DL-Download'
                     sx={{
-                      color: "black !important",
-                      fontSize: "22px !important",
+                      color: 'black !important',
+                      fontSize: '22px !important',
                     }}
                     download={true}
                     href={`/files/${
-                      item.coursewareName.includes("assignment")
-                        ? "assignment"
-                        : "courseware"
+                      item.coursewareName.includes('assignment')
+                        ? 'assignment'
+                        : 'courseware'
                     }.txt`}
                     onClick={() => {
                       setDownloadModal(true);
@@ -443,10 +441,10 @@ export default function CourseDetail() {
                     Download
                   </Button>
                   <Button
-                    id="D-Delete"
+                    id='D-Delete'
                     sx={{
-                      color: "black !important",
-                      fontSize: "22px !important",
+                      color: 'black !important',
+                      fontSize: '22px !important',
                     }}
                     onClick={async () => {
                       const _ = await deleteCourseware({
@@ -466,16 +464,16 @@ export default function CourseDetail() {
           </Stack>
 
           <Stack
-            direction="row"
+            direction='row'
             sx={{
-              position: "absolute",
-              top: "calc(150vh)",
-              paddingBottom: "50px",
+              position: 'absolute',
+              top: 'calc(150vh)',
+              paddingBottom: '50px',
             }}
           >
             <TextField
-              id="Up-input"
-              sx={{ width: "600px !important" }}
+              id='Up-input'
+              sx={{ width: '600px !important' }}
               value={contentToAdd}
               onChange={(event) => {
                 setContentToAdd(event.target.value);
@@ -485,14 +483,14 @@ export default function CourseDetail() {
               }}
             ></TextField>
             <Button
-              id="Up-Add"
+              id='Up-Add'
               onClick={async () => {
                 const _ = await uploadCourseware({
                   courseName,
                   coursewareName: contentToAdd,
                 });
                 if (_.res) {
-                  setContentToAdd("");
+                  setContentToAdd('');
                   getCoursewares();
                 }
               }}
@@ -509,10 +507,10 @@ export default function CourseDetail() {
     <MainLayout>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          overflowX: "hidden",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          overflowX: 'hidden',
         }}
       >
         <div className={style.maintitle}>{courseName}</div>

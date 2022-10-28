@@ -185,7 +185,7 @@ export default function Courses() {
           id='C-Submit'
           className={style.button}
           variant='outlined'
-          sx={{ width: '40%', padding: '30px' }}
+          sx={{ width: '300px', height: '50px' }}
           onClick={() => {
             addNewCourse();
           }}
@@ -206,7 +206,11 @@ export default function Courses() {
         <Box
           sx={{
             width: '1200px',
-            marginTop: '80px',
+            marginTop: '40px',
+            padding: '20px',
+            border: '5px solid #87CC9B',
+            borderRadius: '2%',
+            marginBottom: '20px',
           }}
         >
           <Stack>
