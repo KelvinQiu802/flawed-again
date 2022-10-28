@@ -245,6 +245,7 @@ export default function Courses() {
                   <div
                     id='CC-Projectname'
                     className={style.rowFirst + ' ' + style.rowContent}
+                    style={{ color: 'blue' }}
                   >
                     {item.courseName}
                   </div>
